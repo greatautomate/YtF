@@ -1,0 +1,42 @@
+services:
+  - type: worker
+    name: youtube-uploader-bot
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: oregon
+    branch: main
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: API_ID
+        sync: false
+      - key: API_HASH
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: MONGODB_URL
+        sync: false
+      - key: BOT_NAME
+        value: YouTube Uploader Bot
+      - key: MAX_FILE_SIZE
+        value: "2147483648"
+      - key: ALLOWED_USERS
+        sync: false
+      - key: YOUTUBE_SCOPES
+        value: https://www.googleapis.com/auth/youtube.upload
+      - key: LOG_LEVEL
+        value: INFO
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+    buildCommand: ""
+    startCommand: "python bot.py"
+    autoDeploy: true
+    disk:
+      name: youtube-bot-disk
+      mountPath: /tmp
+      sizeGB: 1
